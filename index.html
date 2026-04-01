@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BankPrep Pro 2026 | Banking Exam Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --navy:#0B1426;--navy2:#132238;--navy3:#1B3550;
+  --gold:#D4A017;--gold2:#F5C842;--gold-glow:rgba(212,160,23,.35);
+  --teal:#00D4AA;--teal-glow:rgba(0,212,170,.25);
+  --red:#FF4757;--green:#2ED573;--blue:#1E90FF;
+  --glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);
+  --text:#E8E8E8;--text2:#A0AEC0;--text3:#6B7A90;
+  --radius:16px;--radius-sm:10px;
+  --shadow:0 8px 32px rgba(0,0,0,.4);
+  --transition:all .35s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:'Poppins',sans-serif;background:var(--navy);color:var(--text);
+  min-height:100vh;overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy2)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+input,select,textarea,button{font-family:inherit;outline:none;border:none}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+/* ═══ FLOATING PARTICLES BG ═══ */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;font-size:clamp(14px,3vw,24px);opacity:.08;
+  animation:floatUp linear infinite;will-change:transform}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:.08}90%{opacity:.08}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+
+/* ═══ LOGIN SCREEN ═══ */
+#loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;
+  justify-content:center;background:var(--navy);transition:opacity .8s,visibility .8s}
+#loginScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.login-bg{position:absolute;inset:0;overflow:hidden}
+.login-bg::before{content:'';position:absolute;width:600px;height:600px;
+  background:radial-gradient(circle,var(--gold-glow),transparent 70%);
+  top:-100px;right:-100px;animation:bgPulse 4s ease-in-out infinite alternate}
+.login-bg::after{content:'';position:absolute;width:500px;height:500px;
+  background:radial-gradient(circle,var(--teal-glow),transparent 70%);
+  bottom:-100px;left:-100px;animation:bgPulse 4s ease-in-out infinite alternate-reverse}
+@keyframes bgPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.3);opacity:1}}
+
+.vault-container{position:relative;z-index:2;width:min(90vw,460px)}
+.vault-door{background:linear-gradient(145deg,#1a2a44,#0d1b2e);
+  border:2px solid var(--gold);border-radius:var(--radius);padding:40px 32px;
+  box-shadow:var(--shadow),0 0 60px var(--gold-glow);
+  animation:vaultEntry .8s cubic-bezier(.4,0,.2,1)}
+@keyframes vaultEntry{0%{transform:scale(.8) rotateY(20deg);opacity:0}100%{transform:scale(1) rotateY(0);opacity:1}}
+
+.vault-logo{text-align:center;margin-bottom:28px}
+.vault-logo .icon{font-size:48px;color:var(--gold);animation:logoSpin 3s ease-in-out infinite;
+  display:inline-block}
+@keyframes logoSpin{0%,100%{transform:rotateY(0)}50%{transform:rotateY(180deg)}}
+.vault-logo h1{font-family:'Orbitron',sans-serif;font-size:clamp(20px,5vw,28px);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:8px}
+.vault-logo p{color:var(--text2);font-size:13px;margin-top:4px}
+
+.form-group{margin-bottom:18px;position:relative}
+.form-group label{display:block;color:var(--gold);font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:12px 16px;
+  background:var(--glass2);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm);color:var(--text);font-size:14px;
+  transition:var(--transition)}
+.form-group input:focus{border-color:var(--gold);box-shadow:0 0 20px var(--gold-glow)}
+.form-group .toggle-pw{position:absolute;right:14px;top:36px;color:var(--text3);
+  cursor:pointer;font-size:14px}
+
+.photo-upload{text-align:center;margin-bottom:20px}
+.photo-upload .avatar-preview{width:80px;height:80px;border-radius:50%;
+  border:3px solid var(--gold);margin:0 auto 10px;overflow:hidden;
+  background:var(--glass);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:var(--transition);position:relative}
+.photo-upload .avatar-preview:hover{transform:scale(1.05);box-shadow:0 0 20px var(--gold-glow)}
+.photo-upload .avatar-preview img{width:100%;height:100%;object-fit:cover}
+.photo-upload .avatar-preview i{font-size:28px;color:var(--text3)}
+.photo-upload span{font-size:11px;color:var(--text3)}
+
+.pin-inputs{display:flex;gap:10px;justify-content:center}
+.pin-inputs input{width:48px;height:54px;text-align:center;font-size:22px;
+  font-weight:700;background:var(--glass2);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm);color:var(--gold);letter-spacing:2px;
+  transition:var(--transition)}
+.pin-inputs input:focus{border-color:var(--gold);box-shadow:0 0 15px var(--gold-glow)}
+
+.btn{width:100%;padding:14px;border-radius:var(--radius-sm);font-size:15px;
+  font-weight:600;text-transform:uppercase;letter-spacing:1.5px;
+  transition:var(--transition);position:relative;overflow:hidden}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);
+  box-shadow:0 4px 20px var(--gold-glow)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--gold-glow)}
+.btn-gold:active{transform:translateY(0)}
+.btn-outline{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+.btn-outline:hover{background:var(--gold);color:var(--navy)}
+
+.btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);
+  transform:scale(0);animation:ripple .6s linear;pointer-events:none}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+
+.login-footer{text-align:center;margin-top:16px}
+.login-footer a{color:var(--gold);font-size:13px;cursor:pointer}
+.login-footer a:hover{text-decoration:underline}
+
+.strength-bar{height:4px;border-radius:2px;background:var(--glass);margin-top:6px;overflow:hidden}
+.strength-bar div{height:100%;border-radius:2px;transition:width .3s,background .3s}
+.strength-weak{width:33%;background:var(--red)}
+.strength-medium{width:66%;background:orange}
+.strength-strong{width:100%;background:var(--green)}
+
+.login-error{color:var(--red);font-size:12px;text-align:center;margin-top:8px;min-height:18px}
+
+/* ═══ SESSION BAR ═══ */
+.session-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--teal));
+  z-index:9998;transition:width 1s linear}
+
+/* ═══ MAIN APP ═══ */
+#app{display:none;min-height:100vh}
+#app.active{display:block;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── HEADER ── */
+.app-header{position:sticky;top:0;z-index:100;
+  background:rgba(11,20,38,.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);padding:12px 20px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-avatar{width:42px;height:42px;border-radius:50%;border:2px solid var(--gold);
+  overflow:hidden;cursor:pointer;flex-shrink:0}
+.header-avatar img{width:100%;height:100%;object-fit:cover}
+.header-greeting h2{font-size:clamp(14px,3vw,18px);font-weight:600;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-greeting p{font-size:11px;color:var(--text3)}
+.header-right{display:flex;align-items:center;gap:12px}
+.header-right .countdown{background:var(--glass);padding:6px 14px;
+  border-radius:20px;font-size:12px;font-weight:600;color:var(--gold);
+  border:1px solid rgba(212,160,23,.2)}
+.header-right .countdown span{color:var(--gold2);font-family:'Orbitron',sans-serif}
+.btn-icon{width:38px;height:38px;border-radius:50%;background:var(--glass);
+  display:flex;align-items:center;justify-content:center;color:var(--text2);
+  transition:var(--transition);font-size:14px;border:1px solid rgba(255,255,255,.06)}
+.btn-icon:hover{background:var(--gold);color:var(--navy)}
+.btn-icon.danger:hover{background:var(--red);color:#fff}
+
+/* ── NAV TABS ── */
+.nav-tabs{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,.04);
+  position:sticky;top:66px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-tabs::-webkit-scrollbar{height:0}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;padding:0 16px;gap:4px}
+.nav-tab{padding:14px 20px;font-size:13px;font-weight:500;color:var(--text3);
+  white-space:nowrap;cursor:pointer;position:relative;transition:var(--transition);
+  border:none;background:none}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--gold)}
+.nav-tab.active::after{content:'';position:absolute;bottom:0;left:50%;
+  transform:translateX(-50%);width:60%;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px 3px 0 0}
+.nav-tab i{margin-right:6px}
+
+/* ── CONTENT ── */
+.content{max-width:1400px;margin:0 auto;padding:24px 20px 100px}
+.section{display:none;animation:sectionIn .4s ease}
+.section.active{display:block}
+@keyframes sectionIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.section-title{font-size:clamp(20px,4vw,26px);font-weight:700;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px}
+.section-title i{color:var(--gold)}
+
+/* ═══ CARDS ═══ */
+.card{background:linear-gradient(145deg,var(--navy2),var(--navy));
+  border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+  padding:24px;transition:var(--transition);position:relative;overflow:hidden}
+.card:hover{border-color:rgba(212,160,23,.2);transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--teal));opacity:0;
+  transition:opacity .3s}
+.card:hover::before{opacity:1}
+
+/* ═══ DASHBOARD ═══ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:linear-gradient(145deg,var(--navy2),var(--navy));
+  border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+  padding:24px;text-align:center;transition:var(--transition);position:relative;overflow:hidden}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3);
+  border-color:var(--gold)}
+.stat-card .stat-icon{font-size:32px;margin-bottom:12px;
+  animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.stat-card h3{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:4px 0}
+.stat-card p{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+
+.stat-card:nth-child(1) .stat-icon{color:var(--gold)}
+.stat-card:nth-child(2) .stat-icon{color:var(--teal)}
+.stat-card:nth-child(3) .stat-icon{color:var(--blue)}
+.stat-card:nth-child(4) .stat-icon{color:var(--green)}
+
+.dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+
+/* Progress Ring */
+.progress-ring-container{text-align:center;padding:20px}
+.progress-ring{width:160px;height:160px;margin:0 auto 16px}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring circle{fill:none;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease}
+.progress-ring .bg{stroke:var(--glass)}
+.progress-ring .fg{stroke:url(#goldGrad)}
+.progress-ring .percentage{position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-family:'Orbitron',sans-serif;font-size:32px;color:var(--gold)}
+
+/* Motivational Quote */
+.quote-card{background:linear-gradient(135deg,rgba(212,160,23,.1),rgba(0,212,170,.05));
+  border:1px solid rgba(212,160,23,.15)}
+.quote-card .quote-text{font-size:16px;font-style:italic;color:var(--text);line-height:1.7;
+  margin-bottom:10px}
+.quote-card .quote-author{font-size:13px;color:var(--gold);font-weight:600}
+
+/* Weekly Update Card */
+.weekly-update-card{background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(30,144,255,.08));
+  border:1px solid rgba(0,212,170,.15)}
+.weekly-update-card .week-badge{display:inline-block;padding:4px 14px;
+  background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;
+  border-radius:20px;font-size:12px;font-weight:600;margin-bottom:12px}
+
+/* ═══ DAILY LOG ═══ */
+.log-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;
+  margin-bottom:24px}
+.form-control{margin-bottom:0}
+.form-control label{display:block;font-size:12px;font-weight:600;color:var(--gold);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.form-control input,.form-control select,.form-control textarea{width:100%;padding:12px 16px;
+  background:var(--glass);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius-sm);color:var(--text);font-size:14px;
+  transition:var(--transition)}
+.form-control input:focus,.form-control select:focus,.form-control textarea:focus{
+  border-color:var(--gold);box-shadow:0 0 15px var(--gold-glow)}
+.form-control textarea{resize:vertical;min-height:80px}
+.form-control select option{background:var(--navy)}
+
+.mood-selector{display:flex;gap:10px;flex-wrap:wrap}
+.mood-btn{padding:8px 16px;border-radius:20px;background:var(--glass);
+  border:1px solid rgba(255,255,255,.08);color:var(--text2);font-size:13px;
+  cursor:pointer;transition:var(--transition)}
+.mood-btn:hover,.mood-btn.active{background:var(--gold);color:var(--navy);
+  border-color:var(--gold)}
+
+.log-entries{margin-top:20px}
+.log-entry{background:var(--glass);border:1px solid rgba(255,255,255,.04);
+  border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:12px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  transition:var(--transition)}
+.log-entry:hover{border-color:rgba(212,160,23,.2);background:var(--glass2)}
+.log-entry .date-badge{background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--navy);padding:8px 12px;border-radius:var(--radius-sm);text-align:center;
+  font-weight:700;min-width:60px}
+.log-entry .date-badge .day{font-size:20px;display:block;line-height:1}
+.log-entry .date-badge .month{font-size:10px;text-transform:uppercase}
+.log-entry .log-details h4{font-size:14px;margin-bottom:4px}
+.log-entry .log-details p{font-size:12px;color:var(--text3)}
+.log-entry .log-meta{text-align:right}
+.log-entry .log-meta .hours{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold)}
+.log-entry .log-meta .hours-label{font-size:10px;color:var(--text3)}
+.log-entry .delete-log{color:var(--text3);cursor:pointer;font-size:14px;
+  transition:var(--transition);padding:4px}
+.log-entry .delete-log:hover{color:var(--red)}
+
+/* ═══ WEEKLY LOG ═══ */
+.weekly-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.week-card{padding:20px}
+.week-card .week-header{display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px}
+.week-card .week-num{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--gold)}
+.week-card .week-dates{font-size:12px;color:var(--text3)}
+.week-card .week-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.week-stat{background:var(--glass);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.week-stat .val{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--gold)}
+.week-stat .label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.progress-bar{height:8px;background:var(--glass);border-radius:4px;overflow:hidden;margin-top:12px}
+.progress-bar .fill{height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--gold),var(--teal));
+  transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+/* ═══ SUBJECT TRACKER ═══ */
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.subject-card{padding:20px}
+.subject-card .subject-header{display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px}
+.subject-card .subject-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.subject-card .subject-name i{color:var(--gold)}
+.subject-card .subject-pct{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold)}
+.subject-card .progress-bar{margin-bottom:14px}
+.topic-list{list-style:none}
+.topic-item{display:flex;align-items:center;gap:10px;padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;color:var(--text2)}
+.topic-item:last-child{border-bottom:none}
+.topic-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--text3);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:var(--transition);flex-shrink:0}
+.topic-check.done{background:var(--gold);border-color:var(--gold)}
+.topic-check.done::after{content:'✓';color:var(--navy);font-size:12px;font-weight:700}
+.topic-item.completed{color:var(--text3);text-decoration:line-through}
+
+/* ═══ MOCK TEST TRACKER ═══ */
+.mock-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;
+  margin-bottom:24px;align-items:end}
+.mock-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mock-table{width:100%;border-collapse:separate;border-spacing:0 8px;min-width:600px}
+.mock-table th{text-align:left;padding:12px 16px;font-size:11px;text-transform:uppercase;
+  letter-spacing:1px;color:var(--text3)}
+.mock-table td{padding:14px 16px;background:var(--glass);font-size:14px}
+.mock-table tr td:first-child{border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.mock-table tr td:last-child{border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.score-badge{padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600}
+.score-high{background:rgba(46,213,115,.15);color:var(--green)}
+.score-mid{background:rgba(245,200,66,.15);color:var(--gold2)}
+.score-low{background:rgba(255,71,87,.15);color:var(--red)}
+.mock-chart{margin-top:24px;padding:20px}
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:200px;padding-top:20px}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:30px}
+.chart-bar{width:100%;border-radius:4px 4px 0 0;
+  background:linear-gradient(to top,var(--gold),var(--gold2));
+  transition:height 1s cubic-bezier(.4,0,.2,1);min-height:4px}
+.chart-bar-label{font-size:10px;color:var(--text3);writing-mode:vertical-rl;
+  text-orientation:mixed;max-height:60px;overflow:hidden}
+.chart-bar-val{font-size:11px;color:var(--gold);font-weight:600}
+
+/* ═══ CALENDAR ═══ */
+.calendar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.mini-calendar{padding:20px}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-header h3{font-size:16px;font-weight:600}
+.cal-nav{display:flex;gap:8px}
+.cal-nav button{width:32px;height:32px;border-radius:50%;background:var(--glass);
+  color:var(--text);font-size:12px;transition:var(--transition)}
+.cal-nav button:hover{background:var(--gold);color:var(--navy)}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-day-name{font-size:10px;color:var(--text3);padding:8px 0;font-weight:600}
+.cal-day{padding:8px 4px;font-size:13px;border-radius:8px;cursor:pointer;
+  transition:var(--transition)}
+.cal-day:hover{background:var(--glass2)}
+.cal-day.today{background:var(--gold);color:var(--navy);font-weight:700}
+.cal-day.has-log{position:relative}
+.cal-day.has-log::after{content:'';position:absolute;bottom:2px;left:50%;
+  transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal)}
+.cal-day.other-month{color:var(--text3);opacity:.3}
+
+.upcoming-events{padding:20px}
+.event-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.04)}
+.event-item:last-child{border-bottom:none}
+.event-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);
+  margin-top:4px;flex-shrink:0}
+.event-item h4{font-size:14px;margin-bottom:2px}
+.event-item p{font-size:12px;color:var(--text3)}
+.gcal-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
+  background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;
+  border-radius:var(--radius-sm);font-size:12px;font-weight:600;margin-top:8px;
+  transition:var(--transition)}
+.gcal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(66,133,244,.3)}
+.gcal-btn i{font-size:14px}
+
+.add-event-form{padding:20px}
+.add-event-form .form-control{margin-bottom:14px}
+
+/* ═══ PROFILE MODAL ═══ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
+  z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--navy2);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);padding:32px;width:min(90vw,480px);max-height:90vh;
+  overflow-y:auto;animation:modalIn .3s ease}
+@keyframes modalIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;
+  border-radius:50%;background:var(--glass);color:var(--text);display:flex;
+  align-items:center;justify-content:center;cursor:pointer;transition:var(--transition)}
+.modal-close:hover{background:var(--red)}
+.modal h2{font-size:20px;margin-bottom:20px;color:var(--gold)}
+
+/* ═══ TOAST ═══ */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 24px;
+  background:linear-gradient(135deg,var(--navy2),var(--navy3));
+  border:1px solid var(--gold);border-radius:var(--radius-sm);color:var(--text);
+  font-size:14px;z-index:9999;transform:translateX(120%);transition:transform .4s ease;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;
+  max-width:min(90vw,400px)}
+.toast.show{transform:translateX(0)}
+.toast i{color:var(--gold);font-size:18px}
+
+/* ═══ EMPTY STATE ═══ */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state i{font-size:48px;color:var(--text3);margin-bottom:16px;opacity:.3}
+.empty-state h3{font-size:18px;margin-bottom:8px;color:var(--text2)}
+.empty-state p{font-size:13px}
+
+/* ═══ STREAKS ═══ */
+.streak-flame{display:inline-flex;align-items:center;gap:4px;color:var(--gold2);font-weight:700}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .vault-door{padding:28px 20px}
+  .header-inner{gap:10px}
+  .header-right .countdown{display:none}
+  .nav-tab{padding:12px 14px;font-size:12px}
+  .nav-tab i{margin-right:4px}
+  .content{padding:16px 12px 100px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-card{padding:16px}
+  .stat-card h3{font-size:24px}
+  .dashboard-grid{grid-template-columns:1fr}
+  .log-form{grid-template-columns:1fr}
+  .log-entry{grid-template-columns:auto 1fr;gap:12px}
+  .log-entry .log-meta{grid-column:1/-1;text-align:left;display:flex;gap:12px;
+    align-items:center;justify-content:space-between}
+  .weekly-grid{grid-template-columns:1fr}
+  .subject-grid{grid-template-columns:1fr}
+  .mock-form{grid-template-columns:1fr}
+  .calendar-grid{grid-template-columns:1fr}
+  .chart-bars{height:150px}
+  .toast{bottom:12px;right:12px;left:12px;max-width:none}
+}
+@media(max-width:400px){
+  .stats-grid{grid-template-columns:1fr}
+  .pin-inputs input{width:42px;height:48px;font-size:18px}
+}
+
+/* ═══ UTILITY ═══ */
+.text-gold{color:var(--gold)}.text-teal{color:var(--teal)}
+.text-red{color:var(--red)}.text-green{color:var(--green)}
+.mt-1{margin-top:8px}.mt-2{margin-top:16px}.mt-3{margin-top:24px}
+.mb-1{margin-bottom:8px}.mb-2{margin-bottom:16px}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.gap-1{gap:8px}.gap-2{gap:16px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ═══ PARTICLES BACKGROUND ═══ -->
+<div id="particles"></div>
+
+<!-- ═══ SESSION TIMER BAR ═══ -->
+<div class="session-bar" id="sessionBar" style="width:100%"></div>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginScreen">
+  <div class="login-bg"></div>
+  <div class="vault-container">
+    <div class="vault-door">
+      <div class="vault-logo">
+        <div class="icon"><i class="fas fa-landmark"></i></div>
+        <h1>BANKPREP PRO</h1>
+        <p>Your Gateway to Banking Success 2026</p>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Gmail Address</label>
+          <input type="email" id="loginEmail" placeholder="yourname@gmail.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password" required autocomplete="current-password">
+          <span class="toggle-pw" onclick="togglePw('loginPassword',this)"><i class="fas fa-eye"></i></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-shield-halved"></i> Security PIN</label>
+          <div class="pin-inputs">
+            <input type="password" maxlength="1" class="pin" data-pin="0" inputmode="numeric">
+            <input type="password" maxlength="1" class="pin" data-pin="1" inputmode="numeric">
+            <input type="password" maxlength="1" class="pin" data-pin="2" inputmode="numeric">
+            <input type="password" maxlength="1" class="pin" data-pin="3" inputmode="numeric">
+          </div>
+        </div>
+        <div class="login-error" id="loginError"></div>
+        <button type="submit" class="btn btn-gold"><i class="fas fa-vault"></i> Unlock Dashboard</button>
+        <div class="login-footer mt-2">
+          <a onclick="showRegister()">New here? Create Account <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="registerForm" class="hide">
+        <div class="photo-upload">
+          <div class="avatar-preview" onclick="document.getElementById('photoInput').click()">
+            <img id="avatarPreview" src="" class="hide">
+            <i class="fas fa-camera" id="avatarIcon"></i>
+          </div>
+          <span>Upload Profile Photo</span>
+          <input type="file" id="photoInput" accept="image/*" hidden>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Full Name</label>
+          <input type="text" id="regName" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Gmail Address</label>
+          <input type="email" id="regEmail" placeholder="yourname@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-bullseye"></i> Target Exam</label>
+          <select id="regExam">
+            <option value="IBPS PO">IBPS PO 2026</option>
+            <option value="SBI PO">SBI PO 2026</option>
+            <option value="IBPS Clerk">IBPS Clerk 2026</option>
+            <option value="SBI Clerk">SBI Clerk 2026</option>
+            <option value="RBI Grade B">RBI Grade B 2026</option>
+            <option value="NABARD">NABARD 2026</option>
+            <option value="Multiple">Multiple Exams</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Create Password</label>
+          <input type="password" id="regPassword" placeholder="Min 6 characters" required>
+          <span class="toggle-pw" onclick="togglePw('regPassword',this)"><i class="fas fa-eye"></i></span>
+          <div class="strength-bar"><div id="pwStrength"></div></div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-shield-halved"></i> Set Security PIN (4 digits)</label>
+          <div class="pin-inputs" id="regPinInputs">
+            <input type="password" maxlength="1" class="rpin" data-rpin="0" inputmode="numeric">
+            <input type="password" maxlength="1" class="rpin" data-rpin="1" inputmode="numeric">
+            <input type="password" maxlength="1" class="rpin" data-rpin="2" inputmode="numeric">
+            <input type="password" maxlength="1" class="rpin" data-rpin="3" inputmode="numeric">
+          </div>
+        </div>
+        <div class="login-error" id="regError"></div>
+        <button type="submit" class="btn btn-gold"><i class="fas fa-user-plus"></i> Create Account</button>
+        <div class="login-footer mt-2">
+          <a onclick="showLogin()"><i class="fas fa-arrow-left"></i> Back to Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="app">
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="header-avatar" onclick="openProfile()">
+          <img id="headerPhoto" src="" alt="Profile">
+        </div>
+        <div class="header-greeting">
+          <h2 id="greetingText">Good Morning</h2>
+          <p id="greetingName">Aspirant</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="countdown">
+          <i class="fas fa-hourglass-half"></i> <span id="daysLeft">183</span> Days Left
+        </div>
+        <button class="btn-icon" onclick="openProfile()" title="Profile"><i class="fas fa-user-gear"></i></button>
+        <button class="btn-icon danger" onclick="logout()" title="Logout"><i class="fas fa-right-from-bracket"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV TABS -->
+  <nav class="nav-tabs">
+    <div class="nav-inner">
+      <button class="nav-tab active" data-tab="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></button>
+      <button class="nav-tab" data-tab="daily"><i class="fas fa-calendar-day"></i><span>Daily Log</span></button>
+      <button class="nav-tab" data-tab="weekly"><i class="fas fa-calendar-week"></i><span>Weekly</span></button>
+      <button class="nav-tab" data-tab="subjects"><i class="fas fa-book-open"></i><span>Subjects</span></button>
+      <button class="nav-tab" data-tab="mocks"><i class="fas fa-file-pen"></i><span>Mock Tests</span></button>
+      <button class="nav-tab" data-tab="calendar"><i class="fas fa-calendar-plus"></i><span>Calendar</span></button>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <!-- ── DASHBOARD ── -->
+    <div class="section active" id="dashboard">
+      <h2 class="section-title"><i class="fas fa-chart-line"></i> Command Center</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-fire"></i></div>
+          <h3 id="statStreak">0</h3>
+          <p>Day Streak 🔥</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <h3 id="statHours">0</h3>
+          <p>Total Hours</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-file-pen"></i></div>
+          <h3 id="statMocks">0</h3>
+          <p>Mocks Taken</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-check-double"></i></div>
+          <h3 id="statTopics">0</h3>
+          <p>Topics Done</p>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="card progress-ring-container">
+          <h3 class="mb-2">Overall Progress</h3>
+          <div class="progress-ring" style="position:relative">
+            <svg width="160" height="160">
+              <defs>
+                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#D4A017"/>
+                  <stop offset="100%" stop-color="#00D4AA"/>
+                </linearGradient>
+              </defs>
+              <circle class="bg" cx="80" cy="80" r="70" stroke-width="10"/>
+              <circle class="fg" id="progressCircle" cx="80" cy="80" r="70" stroke-width="10"
+                stroke-dasharray="440" stroke-dashoffset="440"/>
+            </svg>
+            <div class="percentage" id="progressPct">0%</div>
+          </div>
+          <p class="text-gold" style="font-size:13px" id="progressLabel">Just getting started!</p>
+        </div>
+        <div class="card quote-card">
+          <h3 class="mb-2"><i class="fas fa-quote-left text-gold"></i> Daily Motivation</h3>
+          <p class="quote-text" id="quoteText">"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>
+          <p class="quote-author" id="quoteAuthor">— Winston Churchill</p>
+          <button class="btn btn-outline mt-2" style="width:auto;padding:8px 20px;font-size:12px" onclick="newQuote()">
+            <i class="fas fa-rotate"></i> New Quote
+          </button>
+        </div>
+        <div class="card weekly-update-card">
+          <span class="week-badge" id="weekBadge">Week 1</span>
+          <h3 class="mb-1" id="weekTitle">🚀 Welcome Aboard!</h3>
+          <p style="font-size:13px;color:var(--text2)" id="weekTip">Start by setting up your subjects and creating a study plan. Consistency is key!</p>
+          <div class="mt-2" style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="padding:4px 10px;background:var(--glass);border-radius:12px;font-size:11px;color:var(--teal)">
+              <i class="fas fa-sparkles"></i> New Feature: Study Timer
+            </span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="mb-2"><i class="fas fa-trophy text-gold"></i> Recent Activity</h3>
+          <div id="recentActivity">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p>No activity yet. Start logging your study!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DAILY LOG ── -->
+    <div class="section" id="daily">
+      <h2 class="section-title"><i class="fas fa-calendar-day"></i> Daily Study Log</h2>
+      <div class="card mb-2">
+        <div class="log-form">
+          <div class="form-control">
+            <label>Date</label>
+            <input type="date" id="logDate">
+          </div>
+          <div class="form-control">
+            <label>Hours Studied</label>
+            <input type="number" id="logHours" placeholder="e.g. 6" min="0" max="18" step="0.5">
+          </div>
+          <div class="form-control">
+            <label>Subject Focus</label>
+            <select id="logSubject">
+              <option value="">Select subject</option>
+              <option>Quantitative Aptitude</option>
+              <option>Reasoning Ability</option>
+              <option>English Language</option>
+              <option>General Awareness</option>
+              <option>Computer Knowledge</option>
+              <option>Banking Awareness</option>
+              <option>Data Interpretation</option>
+              <option>Current Affairs</option>
+            </select>
+          </div>
+          <div class="form-control">
+            <label>Mood</label>
+            <div class="mood-selector">
+              <button type="button" class="mood-btn" data-mood="🔥 Fired Up">🔥</button>
+              <button type="button" class="mood-btn" data-mood="😊 Good">😊</button>
+              <button type="button" class="mood-btn" data-mood="😐 Okay">😐</button>
+              <button type="button" class="mood-btn" data-mood="😓 Tough">😓</button>
+              <button type="button" class="mood-btn" data-mood="😴 Tired">😴</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-control mt-1">
+          <label>Notes / Topics Covered</label>
+          <textarea id="logNotes" placeholder="What did you study today? Key takeaways..."></textarea>
+        </div>
+        <button class="btn btn-gold mt-2" style="max-width:300px" onclick="addDailyLog()">
+          <i class="fas fa-plus"></i> Save Daily Log
+        </button>
+      </div>
+      <h3 class="section-title" style="font-size:18px"><i class="fas fa-history"></i> Log History</h3>
+      <div class="log-entries" id="logEntries">
+        <div class="empty-state">
+          <i class="fas fa-book-open"></i>
+          <h3>No Logs Yet</h3>
+          <p>Start logging your daily study to track progress!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WEEKLY LOG ── -->
+    <div class="section" id="weekly">
+      <h2 class="section-title"><i class="fas fa-calendar-week"></i> Weekly Review</h2>
+      <div class="card mb-2">
+        <div class="log-form" style="align-items:end">
+          <div class="form-control">
+            <label>Week Goal (Hours)</label>
+            <input type="number" id="weekGoalInput" placeholder="e.g. 40" min="1" max="100">
+          </div>
+          <div class="form-control">
+            <label>Week Notes / Reflection</label>
+            <input type="text" id="weekNoteInput" placeholder="How was your week?">
+          </div>
+          <button class="btn btn-gold" onclick="saveWeekGoal()"><i class="fas fa-save"></i> Save Goal</button>
+        </div>
+      </div>
+      <div class="weekly-grid" id="weeklyGrid">
+        <div class="empty-state" style="grid-column:1/-1">
+          <i class="fas fa-chart-bar"></i>
+          <h3>Weekly summaries appear here</h3>
+          <p>Log daily to see weekly statistics automatically!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SUBJECTS ── -->
+    <div class="section" id="subjects">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Subject Tracker</h2>
+      <div class="subject-grid" id="subjectGrid"></div>
+    </div>
+
+    <!-- ── MOCK TESTS ── -->
+    <div class="section" id="mocks">
+      <h2 class="section-title"><i class="fas fa-file-pen"></i> Mock Test Tracker</h2>
+      <div class="card mb-2">
+        <div class="mock-form">
+          <div class="form-control">
+            <label>Test Date</label>
+            <input type="date" id="mockDate">
+          </div>
+          <div class="form-control">
+            <label>Exam Name</label>
+            <input type="text" id="mockName" placeholder="e.g. IBPS PO Prelims Mock 1">
+          </div>
+          <div class="form-control">
+            <label>Score</label>
+            <input type="number" id="mockScore" placeholder="Your score" min="0">
+          </div>
+          <div class="form-control">
+            <label>Total Marks</label>
+            <input type="number" id="mockTotal" placeholder="Total marks" min="1">
+          </div>
+          <button class="btn btn-gold" onclick="addMock()"><i class="fas fa-plus"></i> Add</button>
+        </div>
+      </div>
+      <div class="card mock-chart" id="mockChartCard" style="display:none">
+        <h3 class="mb-2"><i class="fas fa-chart-column text-gold"></i> Score Trend</h3>
+        <div class="chart-bars" id="mockChart"></div>
+      </div>
+      <div class="card mt-2">
+        <h3 class="mb-2"><i class="fas fa-table text-gold"></i> All Tests</h3>
+        <div class="mock-table-wrap">
+          <table class="mock-table">
+            <thead><tr><th>#</th><th>Date</th><th>Exam</th><th>Score</th><th>%</th><th></th></tr></thead>
+            <tbody id="mockTableBody">
+              <tr><td colspan="6" style="text-align:center;color:var(--text3);padding:40px">No mock tests recorded yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CALENDAR ── -->
+    <div class="section" id="calendar">
+      <h2 class="section-title"><i class="fas fa-calendar-plus"></i> Schedule & Calendar</h2>
+      <div class="calendar-grid">
+        <div class="card mini-calendar">
+          <div class="cal-header">
+            <button class="cal-nav" style="display:contents"><button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button></button>
+            <h3 id="calMonthYear">April 2026</h3>
+            <button class="cal-nav" style="display:contents"><button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button></button>
+          </div>
+          <div class="cal-days" id="calDays"></div>
+        </div>
+        <div class="card upcoming-events">
+          <h3 class="mb-2"><i class="fas fa-bell text-gold"></i> Upcoming Reminders</h3>
+          <div id="upcomingEvents">
+            <div class="empty-state" style="padding:20px">
+              <p>No upcoming events</p>
+            </div>
+          </div>
+        </div>
+        <div class="card add-event-form">
+          <h3 class="mb-2"><i class="fas fa-plus-circle text-gold"></i> Add Study Reminder</h3>
+          <div class="form-control">
+            <label>Title</label>
+            <input type="text" id="eventTitle" placeholder="e.g. Quant Chapter 5 Revision">
+          </div>
+          <div class="form-control">
+            <label>Date</label>
+            <input type="date" id="eventDate">
+          </div>
+          <div class="form-control">
+            <label>Time</label>
+            <input type="time" id="eventTime" value="09:00">
+          </div>
+          <button class="btn btn-gold" onclick="addEvent()"><i class="fas fa-calendar-plus"></i> Add Reminder</button>
+          <button class="gcal-btn mt-2" onclick="addToGoogleCal()">
+            <i class="fab fa-google"></i> Add to Google Calendar
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal" style="position:relative">
+    <div class="modal-close" onclick="closeProfile()"><i class="fas fa-times"></i></div>
+    <h2><i class="fas fa-user-gear"></i> Profile Settings</h2>
+    <div class="photo-upload mb-2">
+      <div class="avatar-preview" onclick="document.getElementById('editPhotoInput').click()" style="width:100px;height:100px">
+        <img id="profilePhoto" src="">
+        <i class="fas fa-camera" id="profilePhotoIcon" class="hide"></i>
+      </div>
+      <input type="file" id="editPhotoInput" accept="image/*" hidden>
+    </div>
+    <div class="form-control mb-2">
+      <label>Name</label>
+      <input type="text" id="editName">
+    </div>
+    <div class="form-control mb-2">
+      <label>Email</label>
+      <input type="email" id="editEmail" readonly style="opacity:.6">
+    </div>
+    <div class="form-control mb-2">
+      <label>Target Exam</label>
+      <select id="editExam">
+        <option>IBPS PO 2026</option><option>SBI PO 2026</option>
+        <option>IBPS Clerk 2026</option><option>SBI Clerk 2026</option>
+        <option>RBI Grade B 2026</option><option>NABARD 2026</option>
+        <option>Multiple Exams</option>
+      </select>
+    </div>
+    <div class="form-control mb-2">
+      <label>Session Timeout (minutes)</label>
+      <input type="number" id="editTimeout" min="5" max="120" value="30">
+    </div>
+    <button class="btn btn-gold" onclick="saveProfile()"><i class="fas fa-save"></i> Save Changes</button>
+    <button class="btn btn-outline mt-1" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   BANKPREP PRO 2026 — FULL APPLICATION
+   ═══════════════════════════════════════════ */
+
+// ── PARTICLES ──
+(function createParticles(){
+  const c=document.getElementById('particles');
+  const symbols=['₹','$','€','£','¥','%','📊','🏦','💰','📈','🎯','💳'];
+  for(let i=0;i<20;i++){
+    const p=document.createElement('span');
+    p.className='particle';
+    p.textContent=symbols[i%symbols.length];
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(12+Math.random()*18)+'s';
+    p.style.animationDelay=(-Math.random()*20)+'s';
+    p.style.fontSize=(14+Math.random()*16)+'px';
+    c.appendChild(p);
+  }
+})();
+
+// ── STATE ──
+const APP_KEY='bankprep_pro_2026';
+const SESSION_KEY='bankprep_session';
+let state={user:null,dailyLogs:[],weekGoals:{},mockTests:[],subjects:{},events:[],topicsDone:{}};
+let sessionTimer,sessionTimeout=30*60*1000;
+let currentCalMonth,currentCalYear;
+
+// ── PERSISTENCE ──
+function saveState(){localStorage.setItem(APP_KEY,JSON.stringify(state))}
+function loadState(){
+  const d=localStorage.getItem(APP_KEY);
+  if(d){try{state=JSON.parse(d)}catch(e){}}
+}
+
+// ── SUBJECTS DATA ──
+const SUBJECTS={
+  'Quantitative Aptitude':{icon:'fa-calculator',topics:['Number System','HCF & LCM','Percentage','Profit & Loss','SI & CI','Time & Work','Time & Distance','Ratio & Proportion','Average','Mixture & Alligation','Mensuration','Data Sufficiency','Quadratic Equations','Number Series','Simplification']},
+  'Reasoning Ability':{icon:'fa-brain',topics:['Syllogism','Coding-Decoding','Blood Relations','Direction Sense','Seating Arrangement','Puzzles','Inequality','Input-Output','Data Sufficiency','Statement & Assumptions','Order & Ranking','Alphanumeric Series','Machine Input']},
+  'English Language':{icon:'fa-spell-check',topics:['Reading Comprehension','Cloze Test','Para Jumbles','Error Detection','Fill in the Blanks','Vocabulary','Idioms & Phrases','Sentence Improvement','Word Association','Column Matching']},
+  'General Awareness':{icon:'fa-globe',topics:['Current Affairs','Static GK','Indian Economy','Budget','Government Schemes','Awards & Honours','Sports','Books & Authors','Days & Events','Summits & Conferences']},
+  'Computer Knowledge':{icon:'fa-laptop-code',topics:['Computer Fundamentals','MS Office','Networking','Internet','Database','Security','Shortcuts','Hardware','Software','Operating Systems']},
+  'Banking Awareness':{icon:'fa-university',topics:['Banking History','RBI Functions','Types of Banks','NPA','Basel Norms','Banking Terms','NABARD','SEBI','Insurance','Financial Inclusion','Digital Banking','Monetary Policy']},
+  'Data Interpretation':{icon:'fa-chart-pie',topics:['Tables','Bar Graphs','Pie Charts','Line Graphs','Caselet','Mixed DI','Missing DI','Radar/Web Chart']},
+  'Current Affairs':{icon:'fa-newspaper',topics:['National News','International News','Economy News','Banking Updates','RBI Updates','Government Policies','Appointments','Awards','Sports News','Science & Tech']}
+};
+
+function initSubjects(){
+  if(!state.subjects||Object.keys(state.subjects).length===0){
+    state.subjects={};
+    for(const[name,data]of Object.entries(SUBJECTS)){
+      state.subjects[name]={topics:{}};
+      data.topics.forEach(t=>{state.subjects[name].topics[t]=false});
+    }
+    state.topicsDone={};
+    saveState();
+  }
+}
+
+// ── LOGIN SYSTEM ──
+function togglePw(id,el){
+  const inp=document.getElementById(id);
+  const icon=el.querySelector('i');
+  if(inp.type==='password'){inp.type='text';icon.className='fas fa-eye-slash'}
+  else{inp.type='password';icon.className='fas fa-eye'}
+}
+
+function showRegister(){
+  document.getElementById('loginForm').classList.add('hide');
+  document.getElementById('registerForm').classList.remove('hide');
+}
+function showLogin(){
+  document.getElementById('registerForm').classList.add('hide');
+  document.getElementById('loginForm').classList.remove('hide');
+}
+
+// PIN auto-advance
+document.querySelectorAll('.pin').forEach((inp,i,arr)=>{
+  inp.addEventListener('input',()=>{if(inp.value&&i<arr.length-1)arr[i+1].focus()});
+  inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!inp.value&&i>0)arr[i-1].focus()});
+});
+document.querySelectorAll('.rpin').forEach((inp,i,arr)=>{
+  inp.addEventListener('input',()=>{if(inp.value&&i<arr.length-1)arr[i+1].focus()});
+  inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!inp.value&&i>0)arr[i-1].focus()});
+});
+
+// Password strength
+document.getElementById('regPassword')?.addEventListener('input',function(){
+  const bar=document.getElementById('pwStrength');
+  const v=this.value;
+  if(v.length<4){bar.className='strength-weak'}
+  else if(v.length<7||!/[A-Z]/.test(v)||!/[0-9]/.test(v)){bar.className='strength-medium'}
+  else{bar.className='strength-strong'}
+});
+
+// Photo upload
+document.getElementById('photoInput')?.addEventListener('change',function(e){
+  handlePhotoUpload(e,document.getElementById('avatarPreview'),document.getElementById('avatarIcon'));
+});
+document.getElementById('editPhotoInput')?.addEventListener('change',function(e){
+  handlePhotoUpload(e,document.getElementById('profilePhoto'),document.getElementById('profilePhotoIcon'),'edit');
+});
+
+function handlePhotoUpload(e,imgEl,iconEl,mode){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>2*1024*1024){showToast('Photo must be under 2MB');return}
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    imgEl.src=ev.target.result;imgEl.classList.remove('hide');
+    if(iconEl)iconEl.classList.add('hide');
+    if(mode==='edit'){state.user.photo=ev.target.result;saveState();
+      document.getElementById('headerPhoto').src=ev.target.result}
+  };
+  reader.readAsDataURL(file);
+}
+
+// Register
+document.getElementById('registerForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const exam=document.getElementById('regExam').value;
+  const pw=document.getElementById('regPassword').value;
+  const pins=document.querySelectorAll('.rpin');
+  let pin='';pins.forEach(p=>pin+=p.value);
+  const photo=document.getElementById('avatarPreview').src;
+
+  if(!name||!email||!pw||pin.length!==4){
+    document.getElementById('regError').textContent='Please fill all fields & set 4-digit PIN';return}
+  if(pw.length<6){document.getElementById('regError').textContent='Password must be at least 6 characters';return}
+  if(!email.includes('@gmail.com')){document.getElementById('regError').textContent='Please use a Gmail address';return}
+
+  state.user={name,email,exam,password:btoa(pw),pin:btoa(pin),photo:photo||'',
+    createdAt:new Date().toISOString(),startDate:'2026-04-01'};
+  initSubjects();saveState();
+  startSession();
+  document.getElementById('regError').textContent='';
+});
+
+// Login
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  loadState();
+  if(!state.user){document.getElementById('loginError').textContent='No account found. Please register first.';return}
+  const email=document.getElementById('loginEmail').value.trim();
+  const pw=document.getElementById('loginPassword').value;
+  const pins=document.querySelectorAll('.pin');
+  let pin='';pins.forEach(p=>pin+=p.value);
+
+  if(email!==state.user.email){document.getElementById('loginError').textContent='Email not recognized';return}
+  if(btoa(pw)!==state.user.password){document.getElementById('loginError').textContent='Incorrect password';return}
+  if(btoa(pin)!==state.user.pin){document.getElementById('loginError').textContent='Invalid security PIN';return}
+
+  document.getElementById('loginError').textContent='';
+  startSession();
+});
+
+function startSession(){
+  const ls=document.getElementById('loginScreen');
+  ls.classList.add('hidden');
+  const app=document.getElementById('app');
+  app.classList.add('active');
+  localStorage.setItem(SESSION_KEY,Date.now().toString());
+  resetSessionTimer();
+  initApp();
+  showToast('Welcome back, '+state.user.name+'! 🏦');
+}
+
+function resetSessionTimer(){
+  clearTimeout(sessionTimer);
+  const bar=document.getElementById('sessionBar');bar.style.width='100%';
+  const start=Date.now();
+  const tick=()=>{
+    const elapsed=Date.now()-start;
+    const pct=Math.max(0,100-(elapsed/sessionTimeout*100));
+    bar.style.width=pct+'%';
+    if(pct<=0){logout();showToast('Session expired. Please login again.')}
+    else{sessionTimer=requestAnimationFrame(tick)}
+  };
+  sessionTimer=requestAnimationFrame(tick);
+}
+
+function logout(){
+  cancelAnimationFrame(sessionTimer);
+  localStorage.removeItem(SESSION_KEY);
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.querySelectorAll('.pin,.rpin').forEach(p=>p.value='');
+  document.getElementById('loginPassword').value='';
+}
+
+// Auto-session restore
+function checkSession(){
+  loadState();
+  const s=localStorage.getItem(SESSION_KEY);
+  if(s&&state.user&&(Date.now()-parseInt(s))<sessionTimeout){
+    startSession();
+  }
+}
+
+// Reset timer on activity
+['click','keydown','mousemove','touchstart'].forEach(evt=>{
+  document.addEventListener(evt,()=>{
+    if(document.getElementById('app').classList.contains('active')){
+      localStorage.setItem(SESSION_KEY,Date.now().toString());
+      resetSessionTimer();
+    }
+  },{passive:true});
+});
+
+// ── APP INIT ──
+function initApp(){
+  loadState();initSubjects();
+  updateGreeting();updateCountdown();updateStats();
+  renderSubjects();renderDailyLogs();renderWeekly();
+  renderMocks();initCalendar();renderEvents();
+  updateWeeklyTip();setQuote();
+  setInterval(updateCountdown,60000);
+}
+
+// ── NAVIGATION ──
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── GREETING ──
+function updateGreeting(){
+  if(!state.user)return;
+  const h=new Date().getHours();
+  let g=h<12?'Good Morning ☀️':h<17?'Good Afternoon 🌤️':h<21?'Good Evening 🌆':'Burning Midnight Oil 🌙';
+  document.getElementById('greetingText').textContent=g;
+  document.getElementById('greetingName').textContent=state.user.name+' • '+state.user.exam;
+  document.getElementById('headerPhoto').src=state.user.photo||'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%231B3550" width="100" height="100"/><text x="50" y="55" text-anchor="middle" dy=".1em" fill="%23D4A017" font-size="40" font-family="sans-serif">'+state.user.name.charAt(0).toUpperCase()+'</text></svg>';
+}
+
+// ── COUNTDOWN ──
+function updateCountdown(){
+  const examDate=new Date('2026-10-01');
+  const today=new Date();
+  const diff=Math.max(0,Math.ceil((examDate-today)/(1000*60*60*24)));
+  document.getElementById('daysLeft').textContent=diff;
+}
+
+// ── STATS ──
+function updateStats(){
+  const logs=state.dailyLogs||[];
+  const totalHours=logs.reduce((s,l)=>s+parseFloat(l.hours||0),0);
+  const mocks=(state.mockTests||[]).length;
+
+  let topicsDone=0,totalTopics=0;
+  for(const subj of Object.values(state.subjects||{})){
+    for(const done of Object.values(subj.topics||{})){
+      totalTopics++;if(done)topicsDone++;
+    }
+  }
+
+  // Streak calculation
+  let streak=0;
+  const today=new Date();today.setHours(0,0,0,0);
+  const sortedDates=[...new Set(logs.map(l=>l.date))].sort().reverse();
+  for(let i=0;i<sortedDates.length;i++){
+    const d=new Date(sortedDates[i]);d.setHours(0,0,0,0);
+    const expected=new Date(today);expected.setDate(expected.getDate()-i);
+    if(d.getTime()===expected.getTime())streak++;
+    else break;
+  }
+
+  animateCounter('statStreak',streak);
+  animateCounter('statHours',totalHours);
+  animateCounter('statMocks',mocks);
+  animateCounter('statTopics',topicsDone);
+
+  // Progress ring
+  const pct=totalTopics>0?Math.round((topicsDone/totalTopics)*100):0;
+  const circle=document.getElementById('progressCircle');
+  const offset=440-(440*pct/100);
+  setTimeout(()=>{circle.style.strokeDashoffset=offset},300);
+  document.getElementById('progressPct').textContent=pct+'%';
+  const labels=['Just getting started!','Building momentum!','Making progress! 📈','Halfway there! 🎯','Strong progress! 💪','Almost there! 🔥','Champion level! 🏆'];
+  document.getElementById('progressLabel').textContent=labels[Math.min(Math.floor(pct/15),labels.length-1)];
+
+  // Recent activity
+  const recent=document.getElementById('recentActivity');
+  const recentLogs=logs.slice(-5).reverse();
+  if(recentLogs.length){
+    recent.innerHTML=recentLogs.map(l=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0"></div>
+        <div style="flex:1"><span style="font-size:13px">${l.subject||'Study'}</span>
+        <span style="font-size:11px;color:var(--text3);margin-left:8px">${l.date}</span></div>
+        <span style="font-size:13px;color:var(--gold);font-weight:600">${l.hours}h</span>
+      </div>`).join('');
+  }
+}
+
+function animateCounter(id,target){
+  const el=document.getElementById(id);
+  const start=0;const duration=1500;const startTime=performance.now();
+  const isFloat=target%1!==0;
+  function tick(now){
+    const elapsed=now-startTime;
+    const progress=Math.min(elapsed/duration,1);
+    const eased=1-Math.pow(1-progress,3);
+    const current=start+(target-start)*eased;
+    el.textContent=isFloat?current.toFixed(1):Math.round(current);
+    if(progress<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── QUOTES ──
+const QUOTES=[
+  {t:'"Success is not final, failure is not fatal: it is the courage to continue that counts."',a:'— Winston Churchill'},
+  {t:'"The only way to do great work is to love what you do."',a:'— Steve Jobs'},
+  {t:'"Believe you can and you\'re halfway there."',a:'— Theodore Roosevelt'},
+  {t:'"It does not matter how slowly you go as long as you do not stop."',a:'— Confucius'},
+  {t:'"The future belongs to those who believe in the beauty of their dreams."',a:'— Eleanor Roosevelt'},
+  {t:'"Hard work beats talent when talent doesn\'t work hard."',a:'— Tim Notke'},
+  {t:'"The best time to plant a tree was 20 years ago. The second best time is now."',a:'— Chinese Proverb'},
+  {t:'"Don\'t watch the clock; do what it does. Keep going."',a:'— Sam Levenson'},
+  {t:'"Every expert was once a beginner."',a:'— Helen Hayes'},
+  {t:'"Your limitation—it\'s only your imagination."',a:'— Unknown'},
+  {t:'"Push yourself, because no one else is going to do it for you."',a:'— Unknown'},
+  {t:'"Banking is a very good career if you are willing to work hard."',a:'— Unknown'},
+  {t:'"Consistency is what transforms average into excellence."',a:'— Unknown'},
+  {t:'"Study like there\'s no tomorrow because if you keep doing that, you\'ll have a great tomorrow."',a:'— Unknown'},
+];
+function setQuote(){
+  const q=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  document.getElementById('quoteText').textContent=q.t;
+  document.getElementById('quoteAuthor').textContent=q.a;
+}
+function newQuote(){setQuote()}
+
+// ── WEEKLY TIPS ──
+function updateWeeklyTip(){
+  const start=new Date('2026-04-01');
+  const now=new Date();
+  const weekNum=Math.max(1,Math.ceil((now-start)/(7*24*60*60*1000)));
+  const tips=[
+    {w:1,title:'🚀 Welcome Aboard!',tip:'Set up your subjects, create a timetable, and start with basics. Focus on building a daily habit!',feat:'Study Timer'},
+    {w:2,title:'📚 Foundation Week',tip:'Dive deep into Quant basics and English vocabulary. Practice 20 questions daily!',feat:'Streak Counter'},
+    {w:3,title:'🧠 Logic Building',tip:'Focus on Reasoning puzzles and seating arrangements. Start with linear, then circular.',feat:'Progress Charts'},
+    {w:4,title:'📊 Month 1 Review',tip:'Take your first full mock test! Analyze weak areas and adjust your plan.',feat:'Mock Analysis'},
+    {w:5,title:'💪 Building Stamina',tip:'Increase daily study hours. Mix subjects to avoid burnout. Stay consistent!',feat:'Daily Streaks'},
+    {w:6,title:'🔥 Heat is On!',tip:'Focus on speed improvement. Practice DI sets with timer. Target 90% accuracy!',feat:'Speed Tracker'},
+    {w:7,title:'📈 Mid-Journey Check',tip:'Compare Week 1 vs now. You\'ve come far! Focus on GA & Current Affairs daily.',feat:'Comparison View'},
+    {w:8,title:'🎯 Precision Mode',tip:'Quality over quantity. Focus on accuracy and understanding concepts deeply.',feat:'Accuracy Stats'},
+    {w:9,title:'⚡ Speed & Accuracy',tip:'Take timed sectional tests. Identify your strongest and weakest sections.',feat:'Section Analysis'},
+    {w:10,title:'🏆 Month 3 Milestone',tip:'You should be 50%+ through your syllabus. Take 2 full mocks this week!',feat:'Milestone Badges'},
+    {w:11,title:'📝 Revision Begins',tip:'Start revising topics from Week 1-4. Make short notes for quick revision.',feat:'Revision Mode'},
+    {w:12,title:'🌟 Refinement Phase',tip:'Polish your strong areas. Don\'t ignore weak areas but prioritize smartly.',feat:'Smart Priority'},
+    {w:13,title:'🔄 Full Revision Cycle',tip:'Complete one full revision cycle. Take 3 mocks this week!',feat:'Revision Tracker'},
+    {w:14,title:'💎 Polish & Perfect',tip:'Focus on previous year questions. Understand exam patterns and question types.',feat:'PYQ Tracker'},
+    {w:15,title:'🎯 Mock Test Marathon',tip:'Take a mock every alternate day. Analyze each one thoroughly!',feat:'Mock Marathon'},
+    {w:16,title:'📰 GA Power Week',tip:'Dedicate extra time to Current Affairs. Last 6 months are crucial!',feat:'GA Daily Dose'},
+    {w:17,title:'⚔️ Battle Preparation',tip:'Simulate exam conditions at home. Practice with pen and paper if needed.',feat:'Exam Simulator'},
+    {w:18,title:'🏅 Pre-Exam Week',tip:'Light revision only. Stay calm. Focus on health and sleep. Review short notes.',feat:'Quick Notes'},
+    {w:19,title:'🎓 Exam Month!',tip:'Trust your preparation. Keep calm, manage time well in the exam. You\'ve got this!',feat:'Exam Day Tips'},
+    {w:20,title:'🌈 Final Sprint',tip:'Last-minute revision of formulas, current affairs, and banking terms. Stay positive!',feat:'Formula Sheet'},
+  ];
+  const idx=Math.min(weekNum-1,tips.length-1);
+  const tip=tips[Math.max(0,idx)];
+  document.getElementById('weekBadge').textContent='Week '+weekNum;
+  document.getElementById('weekTitle').textContent=tip.title;
+  document.getElementById('weekTip').textContent=tip.tip;
+}
+
+// ── DAILY LOG ──
+function addDailyLog(){
+  const date=document.getElementById('logDate').value;
+  const hours=document.getElementById('logHours').value;
+  const subject=document.getElementById('logSubject').value;
+  const notes=document.getElementById('logNotes').value;
+  const moodBtn=document.querySelector('.mood-btn.active');
+  const mood=moodBtn?moodBtn.dataset.mood:'';
+
+  if(!date||!hours){showToast('Please enter date and hours');return}
+
+  state.dailyLogs.push({date,hours:parseFloat(hours),subject,notes,mood,timestamp:Date.now()});
+  saveState();
+  renderDailyLogs();updateStats();renderWeekly();
+  document.getElementById('logHours').value='';
+  document.getElementById('logNotes').value='';
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+  showToast('Daily log saved! 📝');
+}
+
+document.querySelectorAll('.mood-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+function renderDailyLogs(){
+  const container=document.getElementById('logEntries');
+  const logs=[...(state.dailyLogs||[])].reverse();
+  if(!logs.length){
+    container.innerHTML='<div class="empty-state"><i class="fas fa-book-open"></i><h3>No Logs Yet</h3><p>Start logging your daily study!</p></div>';
+    return;
+  }
+  container.innerHTML=logs.map((l,i)=>{
+    const d=new Date(l.date);
+    const day=d.getDate();
+    const month=d.toLocaleString('default',{month:'short'});
+    const realIdx=state.dailyLogs.length-1-i;
+    return`<div class="log-entry">
+      <div class="date-badge"><span class="day">${day}</span><span class="month">${month}</span></div>
+      <div class="log-details">
+        <h4>${l.subject||'General Study'} ${l.mood||''}</h4>
+        <p>${l.notes||'No notes'}</p>
+      </div>
+      <div class="log-meta">
+        <div class="hours">${l.hours}h</div>
+        <div class="hours-label">studied</div>
+        <span class="delete-log" onclick="deleteLog(${realIdx})"><i class="fas fa-trash"></i></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function deleteLog(idx){
+  state.dailyLogs.splice(idx,1);saveState();
+  renderDailyLogs();updateStats();renderWeekly();
+  showToast('Log deleted');
+}
+
+// ── WEEKLY LOG ──
+function saveWeekGoal(){
+  const goal=document.getElementById('weekGoalInput').value;
+  const note=document.getElementById('weekNoteInput').value;
+  if(!goal){showToast('Enter a weekly goal');return}
+  const weekKey=getWeekKey(new Date());
+  state.weekGoals[weekKey]={goal:parseFloat(goal),note};
+  saveState();renderWeekly();
+  showToast('Weekly goal saved! 🎯');
+}
+
+function getWeekKey(date){
+  const d=new Date(date);
+  const start=new Date('2026-04-01');
+  const weekNum=Math.max(1,Math.ceil((d-start)/(7*24*60*60*1000)));
+  return'W'+weekNum;
+}
+
+function getWeekDates(weekNum){
+  const start=new Date('2026-04-01');
+  start.setDate(start.getDate()+(weekNum-1)*7);
+  const end=new Date(start);end.setDate(end.getDate()+6);
+  return{start:start.toLocaleDateString('en-IN',{month:'short',day:'numeric'}),
+    end:end.toLocaleDateString('en-IN',{month:'short',day:'numeric'})};
+}
+
+function renderWeekly(){
+  const grid=document.getElementById('weeklyGrid');
+  const logs=state.dailyLogs||[];
+  const weeks={};
+  logs.forEach(l=>{
+    const wk=getWeekKey(l.date);
+    if(!weeks[wk])weeks[wk]={hours:0,days:new Set(),subjects:new Set()};
+    weeks[wk].hours+=parseFloat(l.hours);
+    weeks[wk].days.add(l.date);
+    if(l.subject)weeks[wk].subjects.add(l.subject);
+  });
+
+  const weekKeys=Object.keys(weeks).sort((a,b)=>parseInt(b.slice(1))-parseInt(a.slice(1)));
+  if(!weekKeys.length){
+    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-chart-bar"></i><h3>Weekly summaries appear here</h3><p>Log daily to see weekly stats!</p></div>';
+    return;
+  }
+
+  grid.innerHTML=weekKeys.map(wk=>{
+    const w=weeks[wk];
+    const num=parseInt(wk.slice(1));
+    const dates=getWeekDates(num);
+    const goal=state.weekGoals[wk]?.goal||40;
+    const pct=Math.min(100,Math.round((w.hours/goal)*100));
+    return`<div class="card week-card">
+      <div class="week-header">
+        <span class="week-num">${wk}</span>
+        <span class="week-dates">${dates.start} - ${dates.end}</span>
+      </div>
+      <div class="week-stats">
+        <div class="week-stat"><div class="val">${w.hours.toFixed(1)}</div><div class="label">Hours</div></div>
+        <div class="week-stat"><div class="val">${w.days.size}</div><div class="label">Days Active</div></div>
+        <div class="week-stat"><div class="val">${w.subjects.size}</div><div class="label">Subjects</div></div>
+        <div class="week-stat"><div class="val">${pct}%</div><div class="label">Goal (${goal}h)</div></div>
+      </div>
+      <div class="progress-bar"><div class="fill" style="width:${pct}%"></div></div>
+      ${state.weekGoals[wk]?.note?`<p style="font-size:12px;color:var(--text3);margin-top:10px;font-style:italic">"${state.weekGoals[wk].note}"</p>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ── SUBJECTS ──
+function renderSubjects(){
+  const grid=document.getElementById('subjectGrid');
+  grid.innerHTML='';
+  for(const[name,data]of Object.entries(SUBJECTS)){
+    const subState=state.subjects[name]||{topics:{}};
+    const topics=data.topics;
+    const done=topics.filter(t=>subState.topics[t]).length;
+    const pct=Math.round((done/topics.length)*100);
+
+    const card=document.createElement('div');
+    card.className='card subject-card';
+    card.innerHTML=`
+      <div class="subject-header">
+        <div class="subject-name"><i class="fas ${data.icon}"></i>${name}</div>
+        <div class="subject-pct">${pct}%</div>
+      </div>
+      <div class="progress-bar"><div class="fill" style="width:${pct}%"></div></div>
+      <ul class="topic-list">${topics.map(t=>`
+        <li class="topic-item ${subState.topics[t]?'completed':''}">
+          <div class="topic-check ${subState.topics[t]?'done':''}" onclick="toggleTopic('${name}','${t}',this)"></div>
+          <span>${t}</span>
+        </li>`).join('')}
+      </ul>`;
+    grid.appendChild(card);
+  }
+}
+
+function toggleTopic(subject,topic,el){
+  if(!state.subjects[subject])return;
+  state.subjects[subject].topics[topic]=!state.subjects[subject].topics[topic];
+  saveState();
+  const li=el.parentElement;
+  if(state.subjects[subject].topics[topic]){
+    el.classList.add('done');li.classList.add('completed');
+  }else{
+    el.classList.remove('done');li.classList.remove('completed');
+  }
+  // Update percentage
+  const card=el.closest('.subject-card');
+  const data=SUBJECTS[subject];
+  const subState=state.subjects[subject];
+  const done=data.topics.filter(t=>subState.topics[t]).length;
+  const pct=Math.round((done/data.topics.length)*100);
+  card.querySelector('.subject-pct').textContent=pct+'%';
+  card.querySelector('.fill').style.width=pct+'%';
+  updateStats();
+}
+
+// ── MOCK TESTS ──
+function addMock(){
+  const date=document.getElementById('mockDate').value;
+  const name=document.getElementById('mockName').value.trim();
+  const score=parseFloat(document.getElementById('mockScore').value);
+  const total=parseFloat(document.getElementById('mockTotal').value);
+
+  if(!date||!name||isNaN(score)||isNaN(total)||total<=0){showToast('Please fill all mock test fields');return}
+
+  state.mockTests.push({date,name,score,total,pct:Math.round(score/total*100),timestamp:Date.now()});
+  saveState();renderMocks();updateStats();
+  document.getElementById('mockName').value='';
+  document.getElementById('mockScore').value='';
+  document.getElementById('mockTotal').value='';
+  showToast('Mock test recorded! 📊');
+}
+
+function renderMocks(){
+  const mocks=[...(state.mockTests||[])];
+  const tbody=document.getElementById('mockTableBody');
+  const chartCard=document.getElementById('mockChartCard');
+  const chart=document.getElementById('mockChart');
+
+  if(!mocks.length){
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:40px">No mock tests recorded yet</td></tr>';
+    chartCard.style.display='none';
+    return;
+  }
+
+  mocks.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  tbody.innerHTML=mocks.map((m,i)=>{
+    const cls=m.pct>=75?'score-high':m.pct>=50?'score-mid':'score-low';
+    return`<tr>
+      <td>${i+1}</td><td>${m.date}</td><td>${m.name}</td>
+      <td>${m.score}/${m.total}</td>
+      <td><span class="score-badge ${cls}">${m.pct}%</span></td>
+      <td><span style="cursor:pointer;color:var(--text3)" onclick="deleteMock(${i})"><i class="fas fa-trash"></i></span></td>
+    </tr>`;
+  }).join('');
+
+  // Chart
+  chartCard.style.display='block';
+  const maxScore=100;
+  chart.innerHTML=mocks.slice(-15).map(m=>{
+    const h=(m.pct/maxScore)*100;
+    return`<div class="chart-bar-wrap">
+      <div class="chart-bar-val">${m.pct}%</div>
+      <div class="chart-bar" style="height:${h}%"></div>
+      <div class="chart-bar-label">${m.name.substring(0,10)}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteMock(idx){
+  state.mockTests.splice(idx,1);saveState();renderMocks();updateStats();
+  showToast('Mock test deleted');
+}
+
+// ── CALENDAR ──
+function initCalendar(){
+  const now=new Date();
+  currentCalMonth=now.getMonth();currentCalYear=now.getFullYear();
+  renderCalendar();
+  document.getElementById('logDate').valueAsDate=now;
+  document.getElementById('mockDate').valueAsDate=now;
+  document.getElementById('eventDate').valueAsDate=now;
+}
+
+function changeMonth(dir){
+  currentCalMonth+=dir;
+  if(currentCalMonth>11){currentCalMonth=0;currentCalYear++}
+  if(currentCalMonth<0){currentCalMonth=11;currentCalYear--}
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonthYear').textContent=monthNames[currentCalMonth]+' '+currentCalYear;
+
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const container=document.getElementById('calDays');
+  container.innerHTML=dayNames.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+
+  const firstDay=new Date(currentCalYear,currentCalMonth,1).getDay();
+  const daysInMonth=new Date(currentCalYear,currentCalMonth+1,0).getDate();
+  const today=new Date();
+  const logDates=new Set((state.dailyLogs||[]).map(l=>l.date));
+
+  // Previous month padding
+  const prevDays=new Date(currentCalYear,currentCalMonth,0).getDate();
+  for(let i=firstDay-1;i>=0;i--){
+    container.innerHTML+=`<div class="cal-day other-month">${prevDays-i}</div>`;
+  }
+
+  // Current month
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${currentCalYear}-${String(currentCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday=d===today.getDate()&&currentCalMonth===today.getMonth()&&currentCalYear===today.getFullYear();
+    const hasLog=logDates.has(dateStr);
+    container.innerHTML+=`<div class="cal-day${isToday?' today':''}${hasLog?' has-log':''}">${d}</div>`;
+  }
+
+  // Next month padding
+  const totalCells=firstDay+daysInMonth;
+  const remaining=totalCells%7===0?0:7-totalCells%7;
+  for(let i=1;i<=remaining;i++){
+    container.innerHTML+=`<div class="cal-day other-month">${i}</div>`;
+  }
+}
+
+// ── EVENTS / REMINDERS ──
+function addEvent(){
+  const title=document.getElementById('eventTitle').value.trim();
+  const date=document.getElementById('eventDate').value;
+  const time=document.getElementById('eventTime').value;
+  if(!title||!date){showToast('Enter title and date');return}
+
+  state.events.push({title,date,time,id:Date.now()});
+  state.events.sort((a,b)=>new Date(a.date+' '+a.time)-new Date(b.date+' '+b.time));
+  saveState();renderEvents();
+  document.getElementById('eventTitle').value='';
+  showToast('Reminder added! ⏰');
+}
+
+function renderEvents(){
+  const container=document.getElementById('upcomingEvents');
+  const now=new Date();
+  const upcoming=(state.events||[]).filter(e=>new Date(e.date+'T'+e.time)>=now).slice(0,8);
+
+  if(!upcoming.length){
+    container.innerHTML='<div class="empty-state" style="padding:20px"><p>No upcoming events</p></div>';
+    return;
+  }
+
+  container.innerHTML=upcoming.map(e=>{
+    const d=new Date(e.date);
+    return`<div class="event-item">
+      <div class="event-dot"></div>
+      <div style="flex:1">
+        <h4>${e.title}</h4>
+        <p>${d.toLocaleDateString('en-IN',{weekday:'short',month:'short',day:'numeric'})} at ${e.time}</p>
+      </div>
+      <span style="cursor:pointer;color:var(--text3);font-size:12px" onclick="deleteEvent(${e.id})"><i class="fas fa-times"></i></span>
+    </div>`;
+  }).join('');
+}
+
+function deleteEvent(id){
+  state.events=state.events.filter(e=>e.id!==id);saveState();renderEvents();
+  showToast('Reminder deleted');
+}
+
+function addToGoogleCal(){
+  const title=document.getElementById('eventTitle').value.trim()||'BankPrep Study Session';
+  const date=document.getElementById('eventDate').value;
+  const time=document.getElementById('eventTime').value||'09:00';
+  if(!date){showToast('Select a date first');return}
+
+  const start=date.replace(/-/g,'')+'T'+time.replace(':','')+'00';
+  const endTime=new Date(date+'T'+time);
+  endTime.setHours(endTime.getHours()+2);
+  const end=date.replace(/-/g,'')+'T'+String(endTime.getHours()).padStart(2,'0')+String(endTime.getMinutes()).padStart(2,'0')+'00';
+
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent('BankPrep Pro 2026 - Study Session')}&sf=true`;
+  window.open(url,'_blank');
+  showToast('Opening Google Calendar...');
+}
+
+// ── PROFILE ──
+function openProfile(){
+  const modal=document.getElementById('profileModal');
+  modal.classList.add('show');
+  document.getElementById('editName').value=state.user.name;
+  document.getElementById('editEmail').value=state.user.email;
+  document.getElementById('editExam').value=state.user.exam;
+  document.getElementById('editTimeout').value=Math.round(sessionTimeout/60000);
+  const photo=document.getElementById('profilePhoto');
+  if(state.user.photo){photo.src=state.user.photo;photo.classList.remove('hide')}
+}
+function closeProfile(){document.getElementById('profileModal').classList.remove('show')}
+
+function saveProfile(){
+  state.user.name=document.getElementById('editName').value.trim();
+  state.user.exam=document.getElementById('editExam').value;
+  sessionTimeout=parseInt(document.getElementById('editTimeout').value)*60000;
+  saveState();updateGreeting();closeProfile();
+  showToast('Profile updated! ✅');
+}
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='bankprep_data_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  showToast('Data exported! 💾');
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── RIPPLE EFFECT ──
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.btn-gold');
+  if(!btn)return;
+  const ripple=document.createElement('span');
+  ripple.className='ripple';
+  const rect=btn.getBoundingClientRect();
+  ripple.style.left=(e.clientX-rect.left)+'px';
+  ripple.style.top=(e.clientY-rect.top)+'px';
+  ripple.style.width=ripple.style.height=Math.max(rect.width,rect.height)+'px';
+  btn.appendChild(ripple);
+  setTimeout(()=>ripple.remove(),600);
+});
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',checkSession);
+</script>
+</body>
+</html>
